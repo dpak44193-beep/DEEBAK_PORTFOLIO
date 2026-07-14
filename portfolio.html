@@ -574,20 +574,45 @@
   const badge = document.querySelector('.badge');
   const audio = document.getElementById('portfolio-audio');
   const viewCountEl = document.getElementById('view-count');
+  const projectSeenKey = 'deeBakPortfolioProjectSeen';
 
   let voiceTimer = null;
   let hasPlayed = false;
+  let projectCounted = sessionStorage.getItem(projectSeenKey) === '1';
 
-  if (viewCountEl) {
+  function updateViewCountDisplay(value) {
+    if (!viewCountEl) return;
+    viewCountEl.textContent = `${value} view${value === 1 ? '' : 's'}`;
+  }
+
+  function getCurrentCount() {
+    if (!viewCountEl) return;
+    fetch('https://api.countapi.xyz/get/deebak-portfolio/deebak-views')
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && typeof data.value === 'number') {
+          updateViewCountDisplay(data.value);
+        }
+      })
+      .catch(() => {
+        updateViewCountDisplay(1);
+      });
+  }
+
+  function incrementProjectCount() {
+    if (!viewCountEl || projectCounted) return;
+    projectCounted = true;
+    sessionStorage.setItem(projectSeenKey, '1');
+
     fetch('https://api.countapi.xyz/hit/deebak-portfolio/deebak-views')
       .then((response) => response.json())
       .then((data) => {
         if (data && typeof data.value === 'number') {
-          viewCountEl.textContent = `${data.value} view${data.value === 1 ? '' : 's'}`;
+          updateViewCountDisplay(data.value);
         }
       })
       .catch(() => {
-        viewCountEl.textContent = '1 view';
+        updateViewCountDisplay(1);
       });
   }
 
@@ -654,12 +679,26 @@
         playPortfolioAudio();
       }, 700);
     }
+    getCurrentCount();
   });
 
   window.addEventListener('beforeunload', () => {
     audio?.pause();
     stopVoiceAnimation();
   });
+
+  const projectSection = document.getElementById('projects');
+  if (projectSection) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          incrementProjectCount();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    observer.observe(projectSection);
+  }
 </script>
 
 </body>
