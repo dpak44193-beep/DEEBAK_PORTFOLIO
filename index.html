@@ -247,9 +247,9 @@
     overflow:hidden;
     border:1px solid var(--line-soft);
     background:#11161B;
-    min-height:520px;
-    aspect-ratio: 4 / 3;
-    animation:portrait-breathe 4.6s ease-in-out infinite;
+     min-height:520px;
+     /* Removed animation line */
+    
   }
   .badge-frame img{
     display:block; width:100%; height:100%;
@@ -275,10 +275,10 @@
     font-family:'JetBrains Mono',monospace; font-size:11px;
     color:var(--text-2);
   }
-  .badge.is-speaking .badge-frame{animation-duration:2.6s;}
-  .badge.is-speaking .badge-frame img{transform:scale(1.006);}
-  @media (max-width:900px){
-    .badge-frame img{object-fit:cover;}
+  .badge.is-speaking .badge-frame{animation:none !important;}
+    .scanline{
+      display:none;
+    }
   }
   @keyframes portrait-breathe{
     0%,100%{transform:translateY(0px) scale(1);} 
@@ -291,11 +291,7 @@
   .corner.br{bottom:-1px; right:-1px; border-left:none; border-top:none;}
 
   .scanline{
-    position:absolute; left:0; right:0; height:2px;
-    background:linear-gradient(90deg, transparent, var(--cyan), transparent);
-    box-shadow:0 0 12px var(--cyan);
-    animation:scan 3.4s ease-in-out infinite;
-    opacity:0.85;
+    display:none;
   }
   @keyframes scan{
     0%{top:0%;}
