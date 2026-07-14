@@ -124,9 +124,12 @@
     max-width:100%;
   }
   .badge-frame img{
-    width:100%;
+    display:block;
     max-width:100%;
+    max-height:520px;
+    width:auto;
     height:auto;
+    object-fit:contain;
   }
   .hero-grid a,
   .hero-tags,
@@ -146,7 +149,7 @@
     section.hero{padding:110px 0 70px;}
     .hero-grid{grid-template-columns:1fr; gap:40px;}
     .hero-grid > .badge{order:-1;}
-    .badge-frame{min-height:320px;}
+    .badge-frame{min-height:400px; aspect-ratio: 16 / 10;}
   }
   @media (max-width:720px){
     section.hero{padding:100px 0 60px;}
@@ -248,19 +251,17 @@
     overflow:hidden;
     border:1px solid var(--line-soft);
     background:#11161B;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:0;
-    min-height:320px;
-    /* image controls height; no fixed aspect-ratio */
+    min-height:520px;
+    aspect-ratio: 4 / 3;
+    animation:portrait-breathe 4.6s ease-in-out infinite;
   }
   .badge-frame img{
     display:block;
-    width:auto;
     max-width:100%;
     max-height:520px;
-    object-fit:cover;
+    width:auto;
+    height:auto;
+    object-fit:contain;
     transition:transform .3s ease;
   }
   .portrait-canvas{
