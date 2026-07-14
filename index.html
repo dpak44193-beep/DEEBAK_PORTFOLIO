@@ -146,7 +146,7 @@
     section.hero{padding:110px 0 70px;}
     .hero-grid{grid-template-columns:1fr; gap:40px;}
     .hero-grid > .badge{order:-1;}
-    .badge-frame{min-height:400px; aspect-ratio: 16 / 10;}
+    .badge-frame{min-height:320px;}
   }
   @media (max-width:720px){
     section.hero{padding:100px 0 60px;}
@@ -247,14 +247,19 @@
     overflow:hidden;
     border:1px solid var(--line-soft);
     background:#11161B;
-     min-height:520px;
-     /* Removed animation line */
-    
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    min-height:320px;
+    /* image controls height; no fixed aspect-ratio */
   }
   .badge-frame img{
-    display:block; width:100%; height:100%;
-    object-fit:contain;
-    object-position:center;
+    display:block;
+    width:auto;
+    max-width:100%;
+    max-height:520px;
+    object-fit:cover;
     transition:transform .3s ease;
   }
   .portrait-canvas{
@@ -275,11 +280,8 @@
     font-family:'JetBrains Mono',monospace; font-size:11px;
     color:var(--text-2);
   }
-  .badge.is-speaking .badge-frame{animation:none !important;}
-    .scanline{
-      display:none;
-    }
-  }
+  .badge.is-speaking .badge-frame{animation-duration:2.6s;}
+  .badge.is-speaking .badge-frame img{transform:scale(1.006);}
   @keyframes portrait-breathe{
     0%,100%{transform:translateY(0px) scale(1);} 
     50%{transform:translateY(-3px) scale(1.005);} 
@@ -291,7 +293,11 @@
   .corner.br{bottom:-1px; right:-1px; border-left:none; border-top:none;}
 
   .scanline{
-    display:none;
+    position:absolute; left:0; right:0; height:2px;
+    background:linear-gradient(90deg, transparent, var(--cyan), transparent);
+    box-shadow:0 0 12px var(--cyan);
+    animation:scan 3.4s ease-in-out infinite;
+    opacity:0.85;
   }
   @keyframes scan{
     0%{top:0%;}
@@ -485,18 +491,8 @@
 
     <div class="badge">
       <div class="badge-frame">
-        <img src="portrait.png" alt="Portrait of Deebak G">
-        <div class="scanline"></div>
-        <div class="corner tl"></div>
-        <div class="corner tr"></div>
-        <div class="corner bl"></div>
-        <div class="corner br"></div>
-      </div>
-      <audio id="portfolio-audio" preload="auto" src="audio/audio%20for%20site.aac"></audio>
-      <div class="badge-controls">
-        <button id="play-portrait-voice" type="button">▶ Play intro</button>
-        <span class="speech-status" id="speech-status">Ready to speak</span>
-      </div>
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABogAAAOtCAIAAAA95HBeAABxn2NhQlgAAHGfanVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAAcXlqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOmYzYjliMDAwLWQzNTMtNGNkZS04Mzc3LWIxM2QwNzVjZTlkYwAAACFVanVtYgAAAClqdW1kYzJhcwARABCAAACqADibcQNjMnBhLmFzc2VydGlvbnMAAAAJ0Wp1bWIAAAA7anVtZEDLDDK7ikidpwsq1vR/Q2kTYzJwYS5pY29uAAAAABhjMnNoscHYgky29xV/TuO9KpG+dgAAABdiZmRiAGltYWdlL3N2Zyt4bWwAAAAJd2JpZGI8c3ZnIHdpZHRoPSI3MTYiIGhlaWdodD0iNzE2IiB        <img src="portrait.png" alt="Portrait of Deebak G">
+ </div>
       <div class="badge-readout">
         <span class="view-counter" id="view-count">0 views</span>
         <span>ID://DEEBAK_G</span>
