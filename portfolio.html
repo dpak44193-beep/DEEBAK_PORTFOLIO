@@ -100,6 +100,44 @@
     gap:56px;
     align-items:start;
   }
+  .hero-grid > *{
+    min-width:0;
+    max-width:100%;
+  }
+  .hero-grid .badge,
+  .hero-grid .hero-copy,
+  .hero-grid .badge-frame,
+  .hero-tags,
+  .hero-cta,
+  .badge-controls,
+  .badge-readout{
+    min-width:0;
+    max-width:100%;
+  }
+  .hero-tags,
+  .badge-controls,
+  .badge-readout{
+    flex-wrap:wrap;
+  }
+  .badge-frame{
+    width:100%;
+    max-width:100%;
+  }
+  .badge-frame img{
+    width:100%;
+    max-width:100%;
+    height:auto;
+  }
+  .hero-grid a,
+  .hero-tags,
+  .eyebrow,
+  h1.name,
+  .role-line,
+  .proj-card,
+  .badge-readout{
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
   @media (max-width:1100px){
     .hero-grid{grid-template-columns:1fr; gap:48px;}
     .hero-frame{padding-top:0;}
