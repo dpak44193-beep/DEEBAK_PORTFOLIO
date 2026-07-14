@@ -212,6 +212,11 @@
     margin-top:14px; padding-top:14px; border-top:1px solid var(--line-soft);
     font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-2);
   }
+  .badge-readout .view-counter{
+    color:var(--text-1);
+    font-size:10.5px;
+    letter-spacing:0.2px;
+  }
   .badge-readout .status{color:var(--cyan);}
   .badge-readout .status::before{content:"● "; }
 
@@ -391,9 +396,6 @@
         <div class="corner tr"></div>
         <div class="corner bl"></div>
         <div class="corner br"></div>
-        <div class="floating-tag ft-1">ROLE: SEC_ENGINEER_ASPIRANT</div>
-        <div class="floating-tag ft-2">LOC: COIMBATORE, IN</div>
-        <div class="floating-tag ft-3">CLEARANCE: STUDENT</div>
       </div>
       <audio id="portfolio-audio" preload="auto" src="audio/audio%20for%20site.aac"></audio>
       <div class="badge-controls">
@@ -401,6 +403,7 @@
         <span class="speech-status" id="speech-status">Ready to speak</span>
       </div>
       <div class="badge-readout">
+        <span class="view-counter" id="view-count">0 views</span>
         <span>ID://DEEBAK_G</span>
         <span class="status">ACCESS GRANTED</span>
       </div>
@@ -570,9 +573,23 @@
   const speechStatus = document.getElementById('speech-status');
   const badge = document.querySelector('.badge');
   const audio = document.getElementById('portfolio-audio');
+  const viewCountEl = document.getElementById('view-count');
 
   let voiceTimer = null;
   let hasPlayed = false;
+
+  if (viewCountEl) {
+    fetch('https://api.countapi.xyz/hit/deebak-portfolio/deebak-views')
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && typeof data.value === 'number') {
+          viewCountEl.textContent = `${data.value} view${data.value === 1 ? '' : 's'}`;
+        }
+      })
+      .catch(() => {
+        viewCountEl.textContent = '1 view';
+      });
+  }
 
   function stopVoiceAnimation() {
     if (voiceTimer) {
